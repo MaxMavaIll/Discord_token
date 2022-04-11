@@ -1,0 +1,4 @@
+ __pacache__/
+ venv/
+ .idea
+ .vscode
