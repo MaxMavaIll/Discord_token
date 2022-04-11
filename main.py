@@ -7,7 +7,7 @@ from manage_fun.add_fun import wrc
 import time
 
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(executable_path="/home/illya/Documents/My_test_work/work_withBrouser/Discord_token/chromedriver")
 one_day = 24 * 60 * 60 
 while True:
     date = wrc.get_all()
