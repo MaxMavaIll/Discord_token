@@ -77,15 +77,20 @@ def delete_addr_testnet(name):
 def output_screen():
     date = wrc.get_all()
     if date["date"] != []:
-        print("%15s %20s" %("--Email--", "--password--"))
+        j = 1
+        print("%20s %40s" %("--Email--", "--password--"))
         for i in date["date"]:
-            print("%s    %s" %(i[0], i[1]))
+            print(" %d. %s    %37s" %(j, i[0], i[1]))
+            j += 1
+        print()
     else:
         print("\nEmail none...\n")
 
     if date["address"] != []:
-        print("%25s" %"--Address--")
+        j = 1
+        print("%40s" %"--Address--")
         for i in date["address"]:
-            print("%s : %s " %(i[0], i[1]))
+            print(" %d. %s : %s " %(j, i[0], i[1]))
+            j += 1
     else:
         print("\nAddress none...")
