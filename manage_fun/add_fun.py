@@ -4,24 +4,25 @@ from json import dumps,loads
 
 
 class Write_Read_config:
+    """Class for work with congfig.py"""
     def get_all(self):
         with open("config.py", "r") as file:
             read = file.read()
-            date = loads(read)
-            return date
+            data = loads(read)
+            return data
 
     def get_elem(self):
         pass
 
-    def save(self, date):
+    def save(self, data):
         with open("config.py", "w") as file:
-            x = dumps( date, indent=1 )
+            x = dumps( data, indent=1 )
             file.write(x)
 
-    def check_email(self, email_name):
+    def check_is_volue(self, name_volue, name_key):
         dt = self.get_all()
-        for i in range(len(dt["date"])):
-            if dt["date"][i][0] == email_name:
+        for i in range(len(dt[name_key])):
+            if dt[name_key][i][0] == name_volue:
                 return 1
         return 0
 
@@ -30,9 +31,12 @@ class Write_Read_config:
             if dt[key][i][0] == arg:
                 return i
         return None
-
-    
+  
 wrc = Write_Read_config()
+
+
+
+#additional function
 
 def check_email_password( *get ):
     if len(get)%2 != 1 and len(get) != 1:
@@ -43,54 +47,36 @@ def check_email_password( *get ):
 def chack_addr_testnet( *get ):
     pass
 
-def add_INconf_tnet( *args ):
-    date = wrc.get_all()
-    pol_args = len(args)/2
-    for i in range( int(pol_args) ):
-        mass = []
-        for j in range(2):
-            mass.append(args[2*i+j])
-        date["address"].append(mass)
-    wrc.save(date)
+# def add_INconf_tnet( *args ):
+#     data = wrc.get_all()
+#     pol_args = len(args)/2
+#     for i in range( int(pol_args) ):
+#         mass = []
+#         for j in range(2):
+#             mass.append(args[2*i+j])
+#         data["address"].append(mass)
+#     wrc.save(data)
 
-def add_INconf( *args ):
-    date = wrc.get_all()
-    pol_args = len(args)/2
-    for i in range( int(pol_args) ):
-        mass = []
-        for j in range(2):
-            mass.append(args[2*i+j])
-        
-        date["date"].append(mass)
-    wrc.save(date)
-
-def delete_email(email_name):
-    date = wrc.get_all()
-    del date["date"][wrc.find_index(date, email_name, "date")]
-    wrc.save(date)
-
-def delete_addr_testnet(name):
-    date = wrc.get_all()
-    del date["address"][wrc.find_index(date, name, "address")]
-    wrc.save(date)
+def add_INconf( name_key, *args ):
+    data = wrc.get_all()
+    if name_key == "data":
+        number_elem = 4
+        pol_args = int(len(args)/number_elem)
+        for i in range( pol_args ):
+            mass = []
+            for j in range(number_elem):
+                mass.append(args[number_elem*i+j])
+            
+            data[name_key].append(mass)
+        wrc.save(data)
+    else:
+        number_elem = 2
+        pol_args = len(args)/number_elem
+        for i in range( int(pol_args) ):
+            mass = []
+            for j in range(number_elem):
+                mass.append(args[number_elem*i+j])
+            
+            data[name_key].append(mass)
+        wrc.save(data)
     
-def output_screen():
-    date = wrc.get_all()
-    if date["date"] != []:
-        j = 1
-        print("%20s %40s" %("--Email--", "--password--"))
-        for i in date["date"]:
-            print(" %d. %s    %37s" %(j, i[0], i[1]))
-            j += 1
-        print()
-    else:
-        print("\nEmail none...\n")
-
-    if date["address"] != []:
-        j = 1
-        print("%40s" %"--Address--")
-        for i in date["address"]:
-            print(" %d. %s : %s " %(j, i[0], i[1]))
-            j += 1
-    else:
-        print("\nAddress none...")
