@@ -42,55 +42,56 @@ def get_args_cli(mass):
 
 def start_manager():
     get = sys.argv[1:]
-    print(get)
 
-
-    if get[0] == "add":
-        if get[1] in "-ml":
-            if check_email_password( *get[2:]):
-                add_INconf("data", *get[2:])
-                print("Email з паролем додані!")
-            else:
-                print("Провірте правельність ведення, не вистачає password або email")
+    try:
+        if get[0] == "add":
+            if get[1] in "-ml":
+                if check_email_password( *get[2:]):
+                    add_INconf("data", *get[2:])
+                    print("Email з паролем додані!")
+                else:
+                    print("Провірте правельність ведення, не вистачає password або email")
+            
+            elif get[1] in "-addr":
+                add_INconf("address", *get[2:])
+                print("Адрес доданий")
         
-        elif get[1] in "-addr":
-            add_INconf("address", *get[2:])
-            print("Адрес доданий")
-    
-        elif get[1] in "-url":
-            add_INconf("url", *get[2:])
-            print("url-addr доданий")
+            elif get[1] in "-url":
+                add_INconf("url", *get[2:])
+                print("url-addr доданий")
 
 
-    elif get[0] == "del":
-        if get[1].find("@")+1:
-            if wrc.check_is_volue(get[1], "data"):
-                delete_volue(get[1], "data")
-                print("Email з паролем видалені успішно!")
+        elif get[0] == "del":
+            if get[1].find("@")+1:
+                if wrc.check_is_volue(get[1], "data"):
+                    delete_volue(get[1], "data")
+                    print("Email з паролем видалені успішно!")
+                else:
+                    print("Email не знайдено...")
+            elif get[1] == "-u":
+                if wrc.check_is_volue(get[2], "url"):
+                    delete_volue(get[2], "url")
+                    print("Url видалені успішно!")
+                else:
+                    print("Name_url не знайдено...")
+                
+            elif get[1] == "-a":
+                if wrc.check_is_volue(get[2], "address"):
+                    delete_volue(get[2], "address")
+                    print("Address видалений успішно!")
+                else:
+                    print("Name_addr не знайдено...")
+                
             else:
-                print("Email не знайдено...")
-        elif get[1] == "-u":
-            if wrc.check_is_volue(get[2], "url"):
-                delete_volue(get[2], "url")
-                print("Url видалені успішно!")
-            else:
-                print("Name_url не знайдено...")
-            
-        elif get[1] == "-a":
-            if wrc.check_is_volue(get[2], "address"):
-                delete_volue(get[2], "address")
-                print("Address видалений успішно!")
-            else:
-                print("Name_addr не знайдено...")
-            
-        else:
-            pass
+                pass
 
-    elif get[0] == "list":
-        output_screen()
-    else:
-        # os.system("python3 manage.py -h")
+        elif get[0] == "list":
+            output_screen()
+        elif get[0] == '-h' or get[0] == '--help':
+            get_args_cli(["-h"])
+    except:
+        print("Error! Choose with that.")
         get_args_cli(["-h"])
-
+        
 if __name__ == "__main__":
     start_manager()
