@@ -18,7 +18,7 @@ PATH_click_check = "//*[@id=\"checkbox\"]"
 
 useragent = UserAgent()
 
-options = webdriver.ChromeOptions()
+options = webdriver.FirefoxOptions()
 # options.add_argument('headless')
 # options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
@@ -28,7 +28,7 @@ options.add_argument(f"user-agent={useragent.random}")
 
 one_day = 24 * 60 * 60 
 while True:
-    driver = webdriver.Chrome(executable_path="/home/illya/Documents/My_test_work/work_withBrouser/Discord_token/chromedriver", options=options)
+    driver = webdriver.Firefox(executable_path="/home/illya/Documents/My_test_work/work_withBrouser/Discord_token/driver/geckodriver", options=options)
     data = wrc.get_all()
     print("Цикл розпочатий!")
     for dt in data["data"]:
@@ -74,7 +74,7 @@ while True:
                 print(f"Error email: {dt[0]} time: {datetime.datetime.now()}")
             driver.close()
             driver.quit()
-            driver = webdriver.Chrome(executable_path="/home/illya/Documents/My_test_work/work_withBrouser/Discord_token/chromedriver", options=options)
+            driver = webdriver.Chrome(executable_path="/home/illya/Documents/My_test_work/work_withBrouser/Discord_token/driver/geckodriver", options=options)
     print("Цикл завершений")
     driver.close()
     driver.quit()
