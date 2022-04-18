@@ -1,5 +1,2 @@
- __pacache__/
- venv/
- .idea
- .vscode
- git_p
+error.log
+__pycache__/

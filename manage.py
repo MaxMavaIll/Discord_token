@@ -87,8 +87,12 @@ def start_manager():
 
         elif get[0] == "list":
             output_screen()
+
         elif get[0] == '-h' or get[0] == '--help':
             get_args_cli(["-h"])
+
+        elif get[0] == "start":
+            os.system(f"python3 time_start.py {get[1]}")
     except:
         print("Error! Choose with that.")
         get_args_cli(["-h"])

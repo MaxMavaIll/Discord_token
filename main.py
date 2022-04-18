@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from lib2to3.pgen2.driver import Driver
 from selenium import webdriver
@@ -21,9 +21,10 @@ useragent = UserAgent()
 options = webdriver.ChromeOptions()
 # options.add_argument('headless')
 # options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
 options.add_argument("--disable-blink-features=AutomationControlled")
-# options.add_argument(f"user-agent={useragent.random}")
-options.add_argument("user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'")
+options.add_argument(f"user-agent={useragent.random}")
+# options.add_argument("user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'")
 
 one_day = 24 * 60 * 60 
 while True:
@@ -34,29 +35,32 @@ while True:
         driver.get("https://discord.com/login")
         assert "Discord" in driver.title
         time.sleep(5)
-        driver.save_screenshot("discord.png")
-        os.system("rm /var/www/html/img/discord.png")
-        os.system("mv discord.png /var/www/html/img")
-        time.sleep(30)
+        # print("Перезапускай")
+        # driver.save_screenshot("discord.png")
+        # os.system("rm /var/www/html/img/discord.png")
+        # os.system("mv discord.png /var/www/html/img")
+        # time.sleep(30)
 
-        # enter_e = driver.find_element_by_name("email")
-        # enter_p = driver.find_element_by_name("password")
-        # enter_e.clear()
-        # enter_p.clear()
-        # enter_e.send_keys(dt[0])
-        # time.sleep(3)
-        # enter_p.send_keys(dt[1])
-        # time.sleep(3)
-        # enter_p.send_keys(Keys.RETURN)
-        # time.sleep(5)
-    
-        driver.get(data["url"][wrc.find_index((data, dt[2], "url"))][1])
+        enter_e = driver.find_element_by_name("email")
+        enter_p = driver.find_element_by_name("password")
+        enter_e.clear()
+        enter_p.clear()
+        enter_e.send_keys(dt[0])
+        time.sleep(3)
+        enter_p.send_keys(dt[1])
+        time.sleep(3)
+        enter_p.send_keys(Keys.RETURN)
+        time.sleep(5)
+        print("channel")
+        driver.get(data["url"][wrc.find_index(data, dt[2], "url")][1])
         time.sleep(10)
         try:
-            # send_message = driver.exit = driver.find_element(by=By.XPATH, value=PATH_enter_faucet)
-            # send_message.clear()
-            # send_message.send_keys("$faucet " + data["address"][wrc.find_index((data, dt[3], "address"))][1] + "\n")
-            # time.sleep(5)
+            send_message = driver.exit = driver.find_element(by=By.XPATH, value=PATH_enter_faucet)
+            send_message.clear()
+            print(data["address"][wrc.find_index(data, dt[3], "address")][1])
+            send_message.send_keys("$faucet " + data["address"][wrc.find_index(data, dt[3], "address")][1] + "\n")
+            print("send!")
+            time.sleep(5)
             exit = driver.find_element(by=By.XPATH, value=PATH_entrence_menu).click()
             time.sleep(10)
             exit = driver.find_element(by=By.XPATH, value=PATH_press_exit).click()
@@ -74,5 +78,6 @@ while True:
     print("Цикл завершений")
     driver.close()
     driver.quit()
-    time.sleep(10)
+    time.sleep(one_day + 60)
+        
         

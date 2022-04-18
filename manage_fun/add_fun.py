@@ -26,9 +26,9 @@ class Write_Read_config:
                 return 1
         return 0
 
-    def find_index(self, dt, arg, key) -> int:
-        for i in range(len(dt[key])):
-            if dt[key][i][0] == arg:
+    def find_index(self, data, arg, key) -> int:
+        for i in range(len(data[key])):
+            if data[key][i][0] == arg:
                 return i
         return None
   
